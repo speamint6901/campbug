@@ -10,5 +10,18 @@ services:
           - php
   php:
       build:
-        context: .
-        dockerfile: ./containers/php/Dockerfile
+          context: .
+          dockerfile: ./containers/php/Dockerfile
+      volumes:
+          - ./code:/var/www/html/
+      links:
+          - db
+  db:
+      image: mysql
+      ports:
+        - 3306:3306
+      hostname: dbserver
+      environment:
+        MYSQL_DATABASE: hammocks
+        MYSQL_ROOT_PASSWORD: password
+
